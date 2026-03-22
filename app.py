@@ -156,10 +156,15 @@ def checklists():
         result.append(row)
     return jsonify(result)
 
-@app.route('/api/checklists/<int:cid>', methods=['DELETE'])
+@app.route('/api/checklists/<int:cid>', methods=['PUT','DELETE'])
 def checklist_item(cid):
     conn = get_db()
-    conn.execute("DELETE FROM checklists WHERE id=?",(cid,))
+    if request.method == 'DELETE':
+        conn.execute("DELETE FROM checklists WHERE id=?",(cid,))
+        conn.commit(); conn.close(); return jsonify({'ok':True})
+    d = request.json
+    conn.execute("UPDATE checklists SET category=?,title=?,items=? WHERE id=?",
+        (d.get('category','يومي'), d.get('title',''), json.dumps(d.get('items',[]),ensure_ascii=False), cid))
     conn.commit(); conn.close(); return jsonify({'ok':True})
 
 @app.route('/api/reviews', methods=['GET','POST'])
