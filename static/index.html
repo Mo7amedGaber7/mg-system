@@ -7,381 +7,250 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:      #0f1117;
-  --bg2:     #161b27;
-  --bg3:     #1e2535;
-  --bg4:     #252d3d;
-  --border:  rgba(99,126,177,0.12);
-  --border2: rgba(99,126,177,0.22);
-  --accent:       #3b82f6;
-  --accent-hover: #2563eb;
-  --accent-bg:    rgba(59,130,246,0.1);
-  --accent-dim:   rgba(59,130,246,0.06);
-  --green:    #10b981;
-  --green-bg: rgba(16,185,129,0.08);
-  --amber:    #f59e0b;
-  --amber-bg: rgba(245,158,11,0.08);
-  --red:      #ef4444;
-  --red-bg:   rgba(239,68,68,0.08);
-  --text:     #e2e8f0;
-  --text2:    #718096;
-  --text3:    #4a5568;
-  --radius:   12px;
-  --radius-sm: 8px;
+  --bg:#0f1117;--bg2:#161b27;--bg3:#1e2535;--bg4:#252d3d;
+  --border:rgba(99,126,177,0.12);--border2:rgba(99,126,177,0.22);
+  --accent:#3b82f6;--accent-hover:#2563eb;--accent-bg:rgba(59,130,246,0.1);--accent-dim:rgba(59,130,246,0.06);
+  --green:#10b981;--green-bg:rgba(16,185,129,0.08);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.08);
+  --red:#ef4444;--red-bg:rgba(239,68,68,0.08);
+  --text:#e2e8f0;--text2:#718096;--text3:#4a5568;
+  --radius:12px;--radius-sm:8px;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-.sidebar {
-  position: fixed; right: 0; top: 0; bottom: 0; width: 228px;
-  background: var(--bg2); border-left: 1px solid var(--border);
-  display: flex; flex-direction: column; z-index: 100;
-}
-.logo { padding: 20px 18px 16px; border-bottom: 1px solid var(--border); }
-.logo-icon { width: 34px; height: 34px; background: var(--accent-bg); border: 1px solid rgba(59,130,246,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
-.logo-icon svg { width: 17px; height: 17px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.logo h1 { font-size: 14px; font-weight: 700; color: var(--text); }
-.logo span { font-size: 11px; color: var(--text2); }
-.nav { padding: 8px 0; flex: 1; overflow-y: auto; }
-.nav-section { padding: 14px 18px 4px; font-size: 10px; font-weight: 700; color: var(--text3); letter-spacing: 1.2px; text-transform: uppercase; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 18px; cursor: pointer; font-size: 13px; color: var(--text2); border-right: 2px solid transparent; transition: all 0.15s; margin: 1px 0; }
-.nav-item:hover { background: var(--bg3); color: var(--text); }
-.nav-item.active { background: var(--accent-dim); color: var(--accent); border-right-color: var(--accent); }
-.nav-item svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-.sidebar-footer { padding: 12px 14px; border-top: 1px solid var(--border); }
-.user-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: var(--bg3); border-radius: var(--radius-sm); cursor: pointer; transition: background 0.15s; }
-.user-row:hover { background: var(--bg4); }
-.user-avatar { width: 30px; height: 30px; background: var(--accent-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent); flex-shrink: 0; }
-.user-name { font-size: 12px; font-weight: 600; color: var(--text); }
-.user-role { font-size: 11px; color: var(--text2); }
-
-.main { margin-right: 228px; min-height: 100vh; }
-.topbar { padding: 14px 26px; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-.page-title { font-size: 16px; font-weight: 700; color: var(--text); }
-.page-sub { font-size: 12px; color: var(--text2); margin-top: 1px; }
-.btn { padding: 8px 16px; border-radius: var(--radius-sm); font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
-.btn-primary { background: var(--accent); color: white; }
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-ghost { background: var(--bg3); color: var(--text2); border: 1px solid var(--border2); }
-.btn-ghost:hover { background: var(--bg4); color: var(--text); }
-.content { padding: 22px 26px; }
-
-.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 13px; margin-bottom: 22px; }
-.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 18px 16px; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
-.stat-card:hover { border-color: var(--border2); transform: translateY(-1px); }
-.stat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; }
-.stat-card.blue::after  { background: var(--accent); }
-.stat-card.green::after { background: var(--green); }
-.stat-card.amber::after { background: var(--amber); }
-.stat-card.red::after   { background: var(--red); }
-.stat-icon { width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
-.stat-icon svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.stat-icon.blue  { background: var(--accent-bg); color: var(--accent); }
-.stat-icon.green { background: var(--green-bg);  color: var(--green); }
-.stat-icon.amber { background: var(--amber-bg);  color: var(--amber); }
-.stat-icon.red   { background: var(--red-bg);    color: var(--red); }
-.stat-label { font-size: 11px; color: var(--text2); font-weight: 600; margin-bottom: 4px; }
-.stat-num   { font-size: 26px; font-weight: 900; line-height: 1; margin-bottom: 5px; }
-.stat-num.blue  { color: var(--accent); }
-.stat-num.green { color: var(--green); }
-.stat-num.amber { color: var(--amber); }
-.stat-num.red   { color: var(--red); }
-.stat-sub { font-size: 11px; color: var(--text2); }
-.progress-bar { height: 3px; background: var(--bg4); border-radius: 2px; margin-top: 10px; overflow: hidden; }
-.progress-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
-.progress-fill.blue  { background: var(--accent); }
-.progress-fill.green { background: var(--green); }
-
-.table-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
-.table-header { padding: 13px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-.table-title { font-size: 13px; font-weight: 700; color: var(--text); }
-.table-count { font-size: 11px; color: var(--text2); background: var(--bg3); padding: 2px 8px; border-radius: 20px; }
-table { width: 100%; border-collapse: collapse; }
-th { padding: 9px 14px; text-align: right; font-size: 10px; color: var(--text2); font-weight: 700; background: var(--bg3); border-bottom: 1px solid var(--border); white-space: nowrap; letter-spacing: 0.5px; text-transform: uppercase; }
-td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; color: var(--text); }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(255,255,255,0.012); }
-
-.badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 5px; white-space: nowrap; }
-.badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.7; flex-shrink: 0; }
-.badge.published { background: var(--green-bg); color: var(--green); }
-.badge.filming   { background: var(--accent-bg); color: var(--accent); }
-.badge.ready     { background: var(--amber-bg);  color: var(--amber); }
-.badge.hot       { background: var(--red-bg);    color: var(--red); }
-.badge.talking   { background: var(--amber-bg);  color: var(--amber); }
-.badge.new-c     { background: var(--accent-bg); color: var(--accent); }
-.badge.closed    { background: var(--green-bg);  color: var(--green); }
-.badge.rejected  { background: var(--bg4);       color: var(--text2); }
-.badge.positive  { background: var(--green-bg);  color: var(--green); }
-.badge.waiting   { background: var(--amber-bg);  color: var(--amber); }
-.badge.negative  { background: var(--red-bg);    color: var(--red); }
-.badge.no-reply  { background: var(--bg4);       color: var(--text2); }
-
-.action-btn { background: none; border: 1px solid var(--border2); color: var(--text2); padding: 3px 9px; border-radius: var(--radius-sm); font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'Cairo', sans-serif; transition: all 0.15s; margin-left: 3px; }
-.action-btn:hover { background: var(--bg3); color: var(--text); }
-.action-btn.del:hover { border-color: var(--red); color: var(--red); }
-
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(3px); z-index: 1000; display: none; align-items: center; justify-content: center; }
-.modal-overlay.open { display: flex; }
-.modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: 14px; padding: 24px; width: 520px; max-height: 88vh; overflow-y: auto; animation: modalIn 0.18s ease; }
-@keyframes modalIn { from { opacity: 0; transform: scale(0.97) translateY(6px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-.modal h3 { font-size: 15px; font-weight: 700; margin-bottom: 18px; color: var(--text); }
-.form-row   { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.form-group { margin-bottom: 13px; }
-.form-group label { display: block; font-size: 10px; color: var(--text2); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-.form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--bg3); border: 1px solid var(--border2); color: var(--text); padding: 8px 11px; border-radius: var(--radius-sm); font-family: 'Cairo', sans-serif; font-size: 13px; transition: border-color 0.15s, box-shadow 0.15s; outline: none; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,0.08); }
-.form-group textarea { resize: vertical; min-height: 72px; }
-.form-group select option { background: var(--bg3); }
-.modal-actions { display: flex; gap: 8px; margin-top: 18px; justify-content: flex-end; }
-
-.checklist-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 13px; }
-.checklist-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; transition: border-color 0.15s; }
-.checklist-card:hover { border-color: var(--border2); }
-.checklist-cat { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-.checklist-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
-.check-item { display: flex; align-items: flex-start; gap: 9px; padding: 6px 0; border-bottom: 1px solid var(--border); }
-.check-item:last-child { border-bottom: none; }
-.check-box { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--border2); cursor: pointer; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-.check-box:hover { border-color: var(--accent); }
-.check-box.done { background: var(--accent); border-color: var(--accent); }
-.check-box.done::after { content: ''; width: 4px; height: 7px; border: 1.5px solid white; border-top: none; border-right: none; transform: rotate(-50deg) translateY(-1px); margin-right: 1px; }
-.check-text { font-size: 12px; color: var(--text); line-height: 1.5; }
-.check-text.done { color: var(--text3); text-decoration: line-through; }
-
-.week-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
-.week-tab { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border2); cursor: pointer; font-size: 12px; font-weight: 700; color: var(--text2); font-family: 'Cairo', sans-serif; background: none; transition: all 0.15s; }
-.week-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
-.week-tab:hover:not(.active) { background: var(--bg3); color: var(--text); }
-
-.filters { display: flex; gap: 6px; margin-bottom: 13px; flex-wrap: wrap; }
-.filter-btn { padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border2); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text2); background: none; transition: all 0.15s; font-family: 'Cairo', sans-serif; }
-.filter-btn.active { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
-.filter-btn:hover:not(.active) { background: var(--bg3); color: var(--text); }
-
-.review-form { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-.review-form h3 { font-size: 14px; font-weight: 700; margin-bottom: 16px; }
-.review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.mini-item { display: flex; align-items: center; justify-content: space-between; padding: 9px 16px; border-bottom: 1px solid var(--border); transition: background 0.15s; }
-.mini-item:last-child { border-bottom: none; }
-.mini-item:hover { background: rgba(255,255,255,0.012); }
-.mini-name { font-size: 13px; font-weight: 600; color: var(--text); }
-.mini-sub  { font-size: 11px; color: var(--text2); margin-top: 1px; }
-.mini-val  { font-size: 13px; font-weight: 700; color: var(--green); white-space: nowrap; }
-
-.week-chart { display: flex; align-items: flex-end; gap: 20px; padding: 18px; height: 110px; }
-.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; height: 100%; justify-content: flex-end; }
-.bar-col .bar { width: 100%; border-radius: 3px 3px 0 0; transition: height 0.5s ease; min-height: 4px; background: var(--accent); }
-.bar-col .bar-cnt { font-size: 13px; font-weight: 700; color: var(--accent); }
-.bar-col .bar-lbl { font-size: 11px; color: var(--text2); }
-
-.or-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
-.or-stat { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
-.or-stat-num { font-size: 22px; font-weight: 900; }
-.or-stat-lbl { font-size: 11px; color: var(--text2); margin-top: 3px; }
-
-.empty { text-align: center; padding: 36px; color: var(--text2); }
-.empty-icon { width: 40px; height: 40px; background: var(--bg3); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
-.empty-icon svg { width: 20px; height: 20px; stroke: var(--text3); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-.empty-text { font-size: 13px; }
-
-.toast { position: fixed; bottom: 20px; left: 20px; background: var(--bg3); border: 1px solid var(--border2); color: var(--text); padding: 9px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; z-index: 9999; transform: translateY(70px); transition: transform 0.22s ease; box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
-.toast.show { transform: translateY(0); }
-
-.page { display: none; }
-.page.active { display: block; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.sidebar{position:fixed;right:0;top:0;bottom:0;width:228px;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;z-index:100;}
+.logo{padding:20px 18px 16px;border-bottom:1px solid var(--border);}
+.logo-icon{width:34px;height:34px;background:var(--accent-bg);border:1px solid rgba(59,130,246,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+.logo-icon svg{width:17px;height:17px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.logo h1{font-size:14px;font-weight:700;color:var(--text);}
+.logo span{font-size:11px;color:var(--text2);}
+.nav{padding:8px 0;flex:1;overflow-y:auto;}
+.nav-section{padding:14px 18px 4px;font-size:10px;font-weight:700;color:var(--text3);letter-spacing:1.2px;text-transform:uppercase;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 18px;cursor:pointer;font-size:13px;color:var(--text2);border-right:2px solid transparent;transition:all 0.15s;margin:1px 0;}
+.nav-item:hover{background:var(--bg3);color:var(--text);}
+.nav-item.active{background:var(--accent-dim);color:var(--accent);border-right-color:var(--accent);}
+.nav-item svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.sidebar-footer{padding:12px 14px;border-top:1px solid var(--border);}
+.user-row{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm);cursor:pointer;transition:background 0.15s;}
+.user-row:hover{background:var(--bg4);}
+.user-avatar{width:30px;height:30px;background:var(--accent-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--accent);flex-shrink:0;}
+.user-name{font-size:12px;font-weight:600;color:var(--text);}
+.user-role{font-size:11px;color:var(--text2);}
+.main{margin-right:228px;min-height:100vh;}
+.topbar{padding:14px 26px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.page-title{font-size:16px;font-weight:700;color:var(--text);}
+.page-sub{font-size:12px;color:var(--text2);margin-top:1px;}
+.btn{padding:8px 16px;border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all 0.15s;}
+.btn-primary{background:var(--accent);color:white;}
+.btn-primary:hover{background:var(--accent-hover);}
+.btn-ghost{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);}
+.btn-ghost:hover{background:var(--bg4);color:var(--text);}
+.content{padding:22px 26px;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:22px;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 18px 16px;position:relative;overflow:hidden;transition:border-color 0.2s,transform 0.2s;}
+.stat-card:hover{border-color:var(--border2);transform:translateY(-1px);}
+.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;}
+.stat-card.blue::after{background:var(--accent);}
+.stat-card.green::after{background:var(--green);}
+.stat-card.amber::after{background:var(--amber);}
+.stat-card.red::after{background:var(--red);}
+.stat-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.stat-icon svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.stat-icon.blue{background:var(--accent-bg);color:var(--accent);}
+.stat-icon.green{background:var(--green-bg);color:var(--green);}
+.stat-icon.amber{background:var(--amber-bg);color:var(--amber);}
+.stat-icon.red{background:var(--red-bg);color:var(--red);}
+.stat-label{font-size:11px;color:var(--text2);font-weight:600;margin-bottom:4px;}
+.stat-num{font-size:26px;font-weight:900;line-height:1;margin-bottom:5px;}
+.stat-num.blue{color:var(--accent);}.stat-num.green{color:var(--green);}.stat-num.amber{color:var(--amber);}.stat-num.red{color:var(--red);}
+.stat-sub{font-size:11px;color:var(--text2);}
+.progress-bar{height:3px;background:var(--bg4);border-radius:2px;margin-top:10px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:2px;transition:width 0.6s ease;}
+.progress-fill.blue{background:var(--accent);}.progress-fill.green{background:var(--green);}
+.table-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;}
+.table-header{padding:13px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.table-title{font-size:13px;font-weight:700;color:var(--text);}
+.table-count{font-size:11px;color:var(--text2);background:var(--bg3);padding:2px 8px;border-radius:20px;}
+table{width:100%;border-collapse:collapse;}
+th{padding:9px 14px;text-align:right;font-size:10px;color:var(--text2);font-weight:700;background:var(--bg3);border-bottom:1px solid var(--border);white-space:nowrap;letter-spacing:0.5px;text-transform:uppercase;}
+td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,0.012);}
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;white-space:nowrap;}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;opacity:0.7;flex-shrink:0;}
+.badge.published{background:var(--green-bg);color:var(--green);}
+.badge.filming{background:var(--accent-bg);color:var(--accent);}
+.badge.ready{background:var(--amber-bg);color:var(--amber);}
+.badge.hot{background:var(--red-bg);color:var(--red);}
+.badge.talking{background:var(--amber-bg);color:var(--amber);}
+.badge.new-c{background:var(--accent-bg);color:var(--accent);}
+.badge.closed{background:var(--green-bg);color:var(--green);}
+.badge.rejected{background:var(--bg4);color:var(--text2);}
+.badge.positive{background:var(--green-bg);color:var(--green);}
+.badge.waiting{background:var(--amber-bg);color:var(--amber);}
+.badge.negative{background:var(--red-bg);color:var(--red);}
+.badge.no-reply{background:var(--bg4);color:var(--text2);}
+.action-btn{background:none;border:1px solid var(--border2);color:var(--text2);padding:3px 9px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.15s;margin-left:3px;}
+.action-btn:hover{background:var(--bg3);color:var(--text);}
+.action-btn.del:hover{border-color:var(--red);color:var(--red);}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(3px);z-index:1000;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;padding:24px;width:520px;max-height:88vh;overflow-y:auto;animation:modalIn 0.18s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(0.97) translateY(6px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal h3{font-size:15px;font-weight:700;margin-bottom:18px;color:var(--text);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.form-group{margin-bottom:13px;}
+.form-group label{display:block;font-size:10px;color:var(--text2);font-weight:700;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 11px;border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:13px;transition:border-color 0.15s,box-shadow 0.15s;outline:none;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.08);}
+.form-group textarea{resize:vertical;min-height:72px;}
+.form-group select option{background:var(--bg3);}
+.modal-actions{display:flex;gap:8px;margin-top:18px;justify-content:flex-end;}
+/* CHECKLIST */
+.checklist-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.checklist-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:border-color 0.15s;}
+.checklist-card:hover{border-color:var(--border2);}
+.checklist-card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;}
+.checklist-cat{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.checklist-title{font-size:13px;font-weight:700;color:var(--text);}
+.checklist-delete-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:0;line-height:1;flex-shrink:0;}
+.checklist-delete-btn:hover{color:var(--red);}
+.checklist-delete-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;}
+.check-item{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);}
+.check-item:last-child{border-bottom:none;}
+.check-box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border2);cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.check-box:hover{border-color:var(--accent);}
+.check-box.done{background:var(--accent);border-color:var(--accent);}
+.check-box.done::after{content:'';width:4px;height:7px;border:1.5px solid white;border-top:none;border-right:none;transform:rotate(-50deg) translateY(-1px);margin-right:1px;}
+.check-content{flex:1;min-width:0;}
+.check-text{font-size:12px;color:var(--text);line-height:1.5;}
+.check-text.done{color:var(--text3);text-decoration:line-through;}
+.check-assignee{font-size:10px;color:var(--text3);margin-top:2px;display:flex;align-items:center;gap:3px;}
+.item-row{display:flex;gap:6px;margin-bottom:6px;align-items:center;}
+.item-row input{flex:1;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:7px 10px;border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:12px;outline:none;transition:border-color 0.15s;}
+.item-row input:focus{border-color:var(--accent);}
+.item-row .assignee-input{width:100px;flex:none;}
+.remove-item-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;padding:0 3px;}
+.remove-item-btn:hover{color:var(--red);}
+.add-item-btn{background:none;border:1px dashed var(--border2);color:var(--text2);padding:6px;border-radius:var(--radius-sm);font-size:11px;font-weight:600;cursor:pointer;font-family:'Cairo',sans-serif;width:100%;margin-top:6px;transition:all 0.15s;}
+.add-item-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+/* REST */
+.week-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.week-tab{padding:6px 14px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;font-size:12px;font-weight:700;color:var(--text2);font-family:'Cairo',sans-serif;background:none;transition:all 0.15s;}
+.week-tab.active{background:var(--accent);border-color:var(--accent);color:white;}
+.week-tab:hover:not(.active){background:var(--bg3);color:var(--text);}
+.filters{display:flex;gap:6px;margin-bottom:13px;flex-wrap:wrap;}
+.filter-btn{padding:5px 12px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;font-size:12px;font-weight:600;color:var(--text2);background:none;transition:all 0.15s;font-family:'Cairo',sans-serif;}
+.filter-btn.active{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);}
+.filter-btn:hover:not(.active){background:var(--bg3);color:var(--text);}
+.review-form{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.review-form h3{font-size:14px;font-weight:700;margin-bottom:16px;}
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.mini-item{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);transition:background 0.15s;}
+.mini-item:last-child{border-bottom:none;}
+.mini-item:hover{background:rgba(255,255,255,0.012);}
+.mini-name{font-size:13px;font-weight:600;color:var(--text);}
+.mini-sub{font-size:11px;color:var(--text2);margin-top:1px;}
+.mini-val{font-size:13px;font-weight:700;color:var(--green);white-space:nowrap;}
+.week-chart{display:flex;align-items:flex-end;gap:20px;padding:18px;height:110px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end;}
+.bar-col .bar{width:100%;border-radius:3px 3px 0 0;transition:height 0.5s ease;min-height:4px;background:var(--accent);}
+.bar-col .bar-cnt{font-size:13px;font-weight:700;color:var(--accent);}
+.bar-col .bar-lbl{font-size:11px;color:var(--text2);}
+.or-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;}
+.or-stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center;}
+.or-stat-num{font-size:22px;font-weight:900;}
+.or-stat-lbl{font-size:11px;color:var(--text2);margin-top:3px;}
+.empty{text-align:center;padding:36px;color:var(--text2);}
+.empty-icon{width:40px;height:40px;background:var(--bg3);border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;}
+.empty-icon svg{width:20px;height:20px;stroke:var(--text3);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.empty-text{font-size:13px;}
+.toast{position:fixed;bottom:20px;left:20px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;z-index:9999;transform:translateY(70px);transition:transform 0.22s ease;box-shadow:0 6px 20px rgba(0,0,0,0.3);}
+.toast.show{transform:translateY(0);}
+.page{display:none;}
+.page.active{display:block;}
 </style>
 </head>
 <body>
-
 <div class="sidebar">
   <div class="logo">
-    <div class="logo-icon">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-    </div>
-    <h1>لوحة التحكم</h1>
-    <span>الشهر الاول</span>
+    <div class="logo-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+    <h1>لوحة التحكم</h1><span>الشهر الاول</span>
   </div>
-
   <div class="nav">
     <div class="nav-section">رئيسي</div>
-    <div class="nav-item active" onclick="nav('dashboard',this)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      الرئيسية
-    </div>
+    <div class="nav-item active" onclick="nav('dashboard',this)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>الرئيسية</div>
     <div class="nav-section">المتابعة</div>
-    <div class="nav-item" onclick="nav('content',this)">
-      <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-      الكونتنت
-    </div>
-    <div class="nav-item" onclick="nav('clients',this)">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      العملاء
-    </div>
-    <div class="nav-item" onclick="nav('outreach',this)">
-      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16a2 2 0 0 1 .27.92z"/></svg>
-      Outreach
-    </div>
+    <div class="nav-item" onclick="nav('content',this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>الكونتنت</div>
+    <div class="nav-item" onclick="nav('clients',this)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>العملاء</div>
+    <div class="nav-item" onclick="nav('outreach',this)"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16a2 2 0 0 1 .27.92z"/></svg>Outreach</div>
     <div class="nav-section">ادوات</div>
-    <div class="nav-item" onclick="nav('checklists',this)">
-      <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-      Checklists
-    </div>
-    <div class="nav-item" onclick="nav('review',this)">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      المراجعة الاسبوعية
-    </div>
+    <div class="nav-item" onclick="nav('checklists',this)"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Checklists</div>
+    <div class="nav-item" onclick="nav('review',this)"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>المراجعة الاسبوعية</div>
   </div>
-
   <div class="sidebar-footer">
     <div class="user-row" onclick="logout()">
       <div class="user-avatar" id="user-avatar">A</div>
-      <div>
-        <div class="user-name" id="user-name">المدير</div>
-        <div class="user-role">تسجيل الخروج</div>
-      </div>
+      <div><div class="user-name" id="user-name">المدير</div><div class="user-role">تسجيل الخروج</div></div>
     </div>
   </div>
 </div>
-
 <div class="main">
 
 <div id="page-dashboard" class="page active">
-  <div class="topbar">
-    <div><div class="page-title">الرئيسية</div><div class="page-sub" id="date-now"></div></div>
-  </div>
+  <div class="topbar"><div><div class="page-title">الرئيسية</div><div class="page-sub" id="date-now"></div></div></div>
   <div class="content">
     <div class="stats-grid">
-      <div class="stat-card blue">
-        <div class="stat-icon blue"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
-        <div class="stat-label">فيديوهات منشورة</div>
-        <div class="stat-num blue" id="s-published">—</div>
-        <div class="stat-sub">من هدف 40 فيديو</div>
-        <div class="progress-bar"><div class="progress-fill blue" id="s-pct-bar" style="width:0%"></div></div>
-      </div>
-      <div class="stat-card green">
-        <div class="stat-icon green"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-        <div class="stat-label">عملاء محتملين</div>
-        <div class="stat-num green" id="s-clients">—</div>
-        <div class="stat-sub"><span id="s-hot">—</span> مهتمين · <span id="s-closed">—</span> اتغلقوا</div>
-        <div class="progress-bar"><div class="progress-fill green" id="s-clients-bar" style="width:0%"></div></div>
-      </div>
-      <div class="stat-card amber">
-        <div class="stat-icon amber"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12"/><path d="M1 1l22 22"/></svg></div>
-        <div class="stat-label">رسايل Outreach</div>
-        <div class="stat-num amber" id="s-outreach">—</div>
-        <div class="stat-sub">معدل الرد: <span id="s-rate">—</span>%</div>
-      </div>
-      <div class="stat-card red">
-        <div class="stat-icon red"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <div class="stat-label">ايرادات مغلقة</div>
-        <div class="stat-num red" id="s-revenue">—</div>
-        <div class="stat-sub">Pipeline: <span id="s-pipeline">—</span> ج</div>
-      </div>
+      <div class="stat-card blue"><div class="stat-icon blue"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><div class="stat-label">فيديوهات منشورة</div><div class="stat-num blue" id="s-published">—</div><div class="stat-sub">من هدف 40 فيديو</div><div class="progress-bar"><div class="progress-fill blue" id="s-pct-bar" style="width:0%"></div></div></div>
+      <div class="stat-card green"><div class="stat-icon green"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="stat-label">عملاء محتملين</div><div class="stat-num green" id="s-clients">—</div><div class="stat-sub"><span id="s-hot">—</span> مهتمين · <span id="s-closed">—</span> اتغلقوا</div><div class="progress-bar"><div class="progress-fill green" id="s-clients-bar" style="width:0%"></div></div></div>
+      <div class="stat-card amber"><div class="stat-icon amber"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12"/><path d="M1 1l22 22"/></svg></div><div class="stat-label">رسايل Outreach</div><div class="stat-num amber" id="s-outreach">—</div><div class="stat-sub">معدل الرد: <span id="s-rate">—</span>%</div></div>
+      <div class="stat-card red"><div class="stat-icon red"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="stat-label">ايرادات مغلقة</div><div class="stat-num red" id="s-revenue">—</div><div class="stat-sub">Pipeline: <span id="s-pipeline">—</span> ج</div></div>
     </div>
     <div class="dash-grid">
-      <div class="table-card">
-        <div class="table-header"><span class="table-title">اخر العملاء</span><span class="table-count" id="dash-clients-count">0</span></div>
-        <div id="dash-clients-list"></div>
-      </div>
-      <div class="table-card">
-        <div class="table-header"><span class="table-title">اخر الفيديوهات</span><span class="table-count" id="dash-videos-count">0</span></div>
-        <div id="dash-videos-list"></div>
-      </div>
+      <div class="table-card"><div class="table-header"><span class="table-title">اخر العملاء</span><span class="table-count" id="dash-clients-count">0</span></div><div id="dash-clients-list"></div></div>
+      <div class="table-card"><div class="table-header"><span class="table-title">اخر الفيديوهات</span><span class="table-count" id="dash-videos-count">0</span></div><div id="dash-videos-list"></div></div>
     </div>
-    <div class="table-card">
-      <div class="table-header"><span class="table-title">توزيع الكونتنت بالاسابيع</span></div>
-      <div class="week-chart" id="week-chart"></div>
-    </div>
+    <div class="table-card"><div class="table-header"><span class="table-title">توزيع الكونتنت بالاسابيع</span></div><div class="week-chart" id="week-chart"></div></div>
   </div>
 </div>
 
 <div id="page-content" class="page">
-  <div class="topbar">
-    <div><div class="page-title">الكونتنت</div><div class="page-sub">كل فيديوهاتك في مكان واحد</div></div>
-    <button class="btn btn-primary" onclick="openModal('video')">+ فيديو جديد</button>
-  </div>
+  <div class="topbar"><div><div class="page-title">الكونتنت</div><div class="page-sub">كل فيديوهاتك في مكان واحد</div></div><button class="btn btn-primary" onclick="openModal('video')">+ فيديو جديد</button></div>
   <div class="content">
-    <div class="filters" id="video-filters">
-      <button class="filter-btn active" onclick="filterVideos('all',this)">الكل</button>
-      <button class="filter-btn" onclick="filterVideos('منشور',this)">منشور</button>
-      <button class="filter-btn" onclick="filterVideos('متصور',this)">متصور</button>
-      <button class="filter-btn" onclick="filterVideos('جاهز',this)">جاهز</button>
-    </div>
-    <div class="table-card">
-      <div class="table-header"><span class="table-title">قائمة الفيديوهات</span><span class="table-count" id="videos-count">0</span></div>
-      <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>العنوان</th><th>النوع</th><th>المنصة</th><th>الـ Hook</th><th>الحالة</th><th>اسبوع</th><th>اجراء</th></tr></thead><tbody id="videos-tbody"></tbody></table></div>
-    </div>
+    <div class="filters" id="video-filters"><button class="filter-btn active" onclick="filterVideos('all',this)">الكل</button><button class="filter-btn" onclick="filterVideos('منشور',this)">منشور</button><button class="filter-btn" onclick="filterVideos('متصور',this)">متصور</button><button class="filter-btn" onclick="filterVideos('جاهز',this)">جاهز</button></div>
+    <div class="table-card"><div class="table-header"><span class="table-title">قائمة الفيديوهات</span><span class="table-count" id="videos-count">0</span></div><div style="overflow-x:auto"><table><thead><tr><th>#</th><th>العنوان</th><th>النوع</th><th>المنصة</th><th>الـ Hook</th><th>الحالة</th><th>اسبوع</th><th>اجراء</th></tr></thead><tbody id="videos-tbody"></tbody></table></div></div>
   </div>
 </div>
 
 <div id="page-clients" class="page">
-  <div class="topbar">
-    <div><div class="page-title">العملاء</div><div class="page-sub">متابعة كل عميل محتمل</div></div>
-    <button class="btn btn-primary" onclick="openModal('client')">+ عميل جديد</button>
-  </div>
+  <div class="topbar"><div><div class="page-title">العملاء</div><div class="page-sub">متابعة كل عميل محتمل</div></div><button class="btn btn-primary" onclick="openModal('client')">+ عميل جديد</button></div>
   <div class="content">
-    <div class="filters">
-      <button class="filter-btn active" onclick="filterClients('all',this)">الكل</button>
-      <button class="filter-btn" onclick="filterClients('جديد',this)">جديد</button>
-      <button class="filter-btn" onclick="filterClients('بيتكلم',this)">بيتكلم</button>
-      <button class="filter-btn" onclick="filterClients('مهتم',this)">مهتم</button>
-      <button class="filter-btn" onclick="filterClients('اتغلق',this)">اتغلق</button>
-    </div>
-    <div class="table-card">
-      <div class="table-header"><span class="table-title">قائمة العملاء</span><span class="table-count" id="clients-count">0</span></div>
-      <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>الاسم</th><th>المصدر</th><th>الخدمة</th><th>المشكلة</th><th>الحالة</th><th>القيمة</th><th>الخطوة الجاية</th><th>اجراء</th></tr></thead><tbody id="clients-tbody"></tbody></table></div>
-    </div>
+    <div class="filters"><button class="filter-btn active" onclick="filterClients('all',this)">الكل</button><button class="filter-btn" onclick="filterClients('جديد',this)">جديد</button><button class="filter-btn" onclick="filterClients('بيتكلم',this)">بيتكلم</button><button class="filter-btn" onclick="filterClients('مهتم',this)">مهتم</button><button class="filter-btn" onclick="filterClients('اتغلق',this)">اتغلق</button></div>
+    <div class="table-card"><div class="table-header"><span class="table-title">قائمة العملاء</span><span class="table-count" id="clients-count">0</span></div><div style="overflow-x:auto"><table><thead><tr><th>#</th><th>الاسم</th><th>المصدر</th><th>الخدمة</th><th>المشكلة</th><th>الحالة</th><th>القيمة</th><th>الخطوة الجاية</th><th>اجراء</th></tr></thead><tbody id="clients-tbody"></tbody></table></div></div>
   </div>
 </div>
 
 <div id="page-outreach" class="page">
-  <div class="topbar">
-    <div><div class="page-title">Outreach</div><div class="page-sub">متابعة كل رسالة بعتتها</div></div>
-    <button class="btn btn-primary" onclick="openModal('outreach')">+ رسالة جديدة</button>
-  </div>
+  <div class="topbar"><div><div class="page-title">Outreach</div><div class="page-sub">متابعة كل رسالة بعتتها</div></div><button class="btn btn-primary" onclick="openModal('outreach')">+ رسالة جديدة</button></div>
   <div class="content">
-    <div class="or-stats">
-      <div class="or-stat"><div class="or-stat-num" style="color:var(--accent)" id="or-total">0</div><div class="or-stat-lbl">اجمالي الرسايل</div></div>
-      <div class="or-stat"><div class="or-stat-num" style="color:var(--green)" id="or-pos">0</div><div class="or-stat-lbl">ردوا ايجابي</div></div>
-      <div class="or-stat"><div class="or-stat-num" style="color:var(--amber)" id="or-wait">0</div><div class="or-stat-lbl">في الانتظار</div></div>
-      <div class="or-stat"><div class="or-stat-num" style="color:var(--text2)" id="or-rate">0%</div><div class="or-stat-lbl">معدل الرد</div></div>
-    </div>
-    <div class="table-card">
-      <div class="table-header"><span class="table-title">قائمة الرسايل</span><span class="table-count" id="outreach-count">0</span></div>
-      <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>الاسم</th><th>المنصة</th><th>الخدمة</th><th>الرد</th><th>تاريخ الارسال</th><th>اسبوع</th><th>ملاحظات</th><th>اجراء</th></tr></thead><tbody id="outreach-tbody"></tbody></table></div>
-    </div>
+    <div class="or-stats"><div class="or-stat"><div class="or-stat-num" style="color:var(--accent)" id="or-total">0</div><div class="or-stat-lbl">اجمالي الرسايل</div></div><div class="or-stat"><div class="or-stat-num" style="color:var(--green)" id="or-pos">0</div><div class="or-stat-lbl">ردوا ايجابي</div></div><div class="or-stat"><div class="or-stat-num" style="color:var(--amber)" id="or-wait">0</div><div class="or-stat-lbl">في الانتظار</div></div><div class="or-stat"><div class="or-stat-num" style="color:var(--text2)" id="or-rate">0%</div><div class="or-stat-lbl">معدل الرد</div></div></div>
+    <div class="table-card"><div class="table-header"><span class="table-title">قائمة الرسايل</span><span class="table-count" id="outreach-count">0</span></div><div style="overflow-x:auto"><table><thead><tr><th>#</th><th>الاسم</th><th>المنصة</th><th>الخدمة</th><th>الرد</th><th>تاريخ الارسال</th><th>اسبوع</th><th>ملاحظات</th><th>اجراء</th></tr></thead><tbody id="outreach-tbody"></tbody></table></div></div>
   </div>
 </div>
 
 <div id="page-checklists" class="page">
-  <div class="topbar">
-    <div><div class="page-title">Checklists</div><div class="page-sub">روتينك اليومي والاسبوعي</div></div>
-  </div>
+  <div class="topbar"><div><div class="page-title">Checklists</div><div class="page-sub">روتينك اليومي والاسبوعي</div></div><button class="btn btn-primary" onclick="openChecklistModal()">+ قائمة جديدة</button></div>
   <div class="content">
-    <div class="week-tabs">
-      <button class="week-tab active" onclick="filterChecks('يومي',this)">يومي</button>
-      <button class="week-tab" onclick="filterChecks('أسبوعي',this)">اسبوعي</button>
-      <button class="week-tab" onclick="filterChecks('محتوى',this)">افكار محتوى</button>
-    </div>
+    <div class="week-tabs"><button class="week-tab active" onclick="filterChecks('يومي',this)">يومي</button><button class="week-tab" onclick="filterChecks('أسبوعي',this)">اسبوعي</button><button class="week-tab" onclick="filterChecks('محتوى',this)">افكار محتوى</button></div>
     <div class="checklist-grid" id="checklists-grid"></div>
   </div>
 </div>
 
 <div id="page-review" class="page">
-  <div class="topbar">
-    <div><div class="page-title">المراجعة الاسبوعية</div><div class="page-sub">كل خميس — 15 دقيقة</div></div>
-    <button class="btn btn-primary" onclick="saveReview()">حفظ</button>
-  </div>
+  <div class="topbar"><div><div class="page-title">المراجعة الاسبوعية</div><div class="page-sub">كل خميس — 15 دقيقة</div></div><button class="btn btn-primary" onclick="saveReview()">حفظ</button></div>
   <div class="content">
-    <div class="week-tabs">
-      <button class="week-tab active" onclick="selectWeek(1,this)">اسبوع 1</button>
-      <button class="week-tab" onclick="selectWeek(2,this)">اسبوع 2</button>
-      <button class="week-tab" onclick="selectWeek(3,this)">اسبوع 3</button>
-      <button class="week-tab" onclick="selectWeek(4,this)">اسبوع 4</button>
-    </div>
+    <div class="week-tabs"><button class="week-tab active" onclick="selectWeek(1,this)">اسبوع 1</button><button class="week-tab" onclick="selectWeek(2,this)">اسبوع 2</button><button class="week-tab" onclick="selectWeek(3,this)">اسبوع 3</button><button class="week-tab" onclick="selectWeek(4,this)">اسبوع 4</button></div>
     <div class="review-form">
       <h3>مراجعة <span id="review-week-title">الاسبوع الاول</span></h3>
       <div class="review-grid">
@@ -406,7 +275,7 @@ tr:hover td { background: rgba(255,255,255,0.012); }
     <div id="modal-body"></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModalNow()">الغاء</button>
-      <button class="btn btn-primary" onclick="saveModal()">حفظ</button>
+      <button class="btn btn-primary" onclick="currentModal==='checklist'?saveChecklistModal():saveModal()">حفظ</button>
     </div>
   </div>
 </div>
@@ -414,175 +283,129 @@ tr:hover td { background: rgba(255,255,255,0.012); }
 <div class="toast" id="toast"></div>
 
 <script>
-function checkAuth() {
-  const u = sessionStorage.getItem('dashboard_user') || localStorage.getItem('dashboard_user');
-  if (!u) { window.location.href = '/login.html'; return null; }
-  return JSON.parse(u);
+function checkAuth(){const u=sessionStorage.getItem('dashboard_user')||localStorage.getItem('dashboard_user');if(!u){window.location.href='/login.html';return null;}return JSON.parse(u);}
+function logout(){sessionStorage.removeItem('dashboard_user');localStorage.removeItem('dashboard_user');window.location.href='/login.html';}
+const currentUser=checkAuth();
+if(currentUser){document.getElementById('user-name').textContent=currentUser.name;document.getElementById('user-avatar').textContent=currentUser.name[0];}
+
+let currentModal=null,editingId=null;
+let allVideos=[],allClients=[],allOutreach=[],allChecklists=[];
+let videoFilter='all',clientFilter='all',checkFilter='يومي',selectedWeek=1;
+let checkStates={};
+
+function nav(page,el){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('page-'+page).classList.add('active');if(el)el.classList.add('active');const loaders={dashboard:loadDashboard,content:loadVideos,clients:loadClients,outreach:loadOutreach,checklists:loadChecklists,review:loadReviews};if(loaders[page])loaders[page]();}
+
+async function loadStats(){try{const d=await fetch('/api/stats').then(r=>r.json());document.getElementById('s-published').textContent=d.videos.published;document.getElementById('s-pct-bar').style.width=d.videos.pct+'%';document.getElementById('s-clients').textContent=d.clients.total;document.getElementById('s-hot').textContent=d.clients.hot;document.getElementById('s-closed').textContent=d.clients.closed;document.getElementById('s-clients-bar').style.width=Math.min((d.clients.closed/5)*100,100)+'%';document.getElementById('s-outreach').textContent=d.outreach.total;document.getElementById('s-rate').textContent=d.outreach.rate;document.getElementById('s-revenue').textContent=d.revenue.toLocaleString()+' ج';document.getElementById('s-pipeline').textContent=d.clients.pipeline.toLocaleString();}catch(e){}}
+
+async function loadDashboard(){await loadStats();try{const[videos,clients]=await Promise.all([fetch('/api/videos').then(r=>r.json()),fetch('/api/clients').then(r=>r.json())]);const cl=document.getElementById('dash-clients-list');document.getElementById('dash-clients-count').textContent=clients.length;cl.innerHTML=!clients.length?emptyState('لسه مفيش عملاء'):clients.slice(0,5).map(c=>`<div class="mini-item"><div><div class="mini-name">${c.name}</div><div class="mini-sub">${c.source} · ${c.service}</div></div><div style="display:flex;align-items:center;gap:8px">${badgeClient(c.status)}<div class="mini-val">${(c.expected_value||0).toLocaleString()} ج</div></div></div>`).join('');const vl=document.getElementById('dash-videos-list');document.getElementById('dash-videos-count').textContent=videos.length;vl.innerHTML=!videos.length?emptyState('لسه مفيش فيديوهات'):videos.slice(0,5).map(v=>`<div class="mini-item"><div><div class="mini-name">${v.title}</div><div class="mini-sub">${v.type} · ${v.platform}</div></div>${badgeVideo(v.status)}</div>`).join('');const wc=document.getElementById('week-chart');const maxV=Math.max(1,...[1,2,3,4].map(w=>videos.filter(v=>v.week===w).length));wc.innerHTML=[1,2,3,4].map(w=>{const cnt=videos.filter(v=>v.week===w).length;const h=Math.max(4,Math.round((cnt/maxV)*65));return`<div class="bar-col"><div class="bar-cnt">${cnt}</div><div class="bar" style="height:${h}px;opacity:${0.4+w*0.15}"></div><div class="bar-lbl">اسبوع ${w}</div></div>`;}).join('');}catch(e){}}
+
+async function loadVideos(){allVideos=await fetch('/api/videos').then(r=>r.json());renderVideos();}
+function renderVideos(){const f=videoFilter==='all'?allVideos:allVideos.filter(v=>v.status&&v.status.includes(videoFilter));document.getElementById('videos-count').textContent=f.length;const tbody=document.getElementById('videos-tbody');if(!f.length){tbody.innerHTML=`<tr><td colspan="8">${emptyState('مفيش فيديوهات')}</td></tr>`;return;}tbody.innerHTML=f.map((v,i)=>`<tr><td style="color:var(--text2);font-size:11px">${i+1}</td><td style="max-width:200px;font-weight:600">${v.title}</td><td><span class="badge new-c">${v.type||'—'}</span></td><td style="color:var(--text2)">${v.platform||'—'}</td><td style="max-width:160px;color:var(--text2);font-size:12px">${v.hook||'—'}</td><td>${badgeVideo(v.status)}</td><td style="text-align:center;color:var(--text2)">${v.week||1}</td><td><button class="action-btn" onclick="editVideo(${v.id})">تعديل</button><button class="action-btn del" onclick="deleteItem('video',${v.id})">حذف</button></td></tr>`).join('');}
+function filterVideos(f,el){videoFilter=f;document.querySelectorAll('#video-filters .filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderVideos();}
+function badgeVideo(s){if(!s)return'<span class="badge filming">—</span>';if(s.includes('منشور'))return'<span class="badge published">منشور</span>';if(s.includes('جاهز'))return'<span class="badge ready">جاهز</span>';return'<span class="badge filming">متصور</span>';}
+
+async function loadClients(){allClients=await fetch('/api/clients').then(r=>r.json());renderClients();}
+function renderClients(){const f=clientFilter==='all'?allClients:allClients.filter(c=>c.status&&c.status.includes(clientFilter));document.getElementById('clients-count').textContent=f.length;const tbody=document.getElementById('clients-tbody');if(!f.length){tbody.innerHTML=`<tr><td colspan="9">${emptyState('مفيش عملاء')}</td></tr>`;return;}tbody.innerHTML=f.map((c,i)=>`<tr><td style="color:var(--text2);font-size:11px">${i+1}</td><td style="font-weight:600">${c.name}</td><td style="color:var(--text2);font-size:12px">${c.source||'—'}</td><td style="font-size:12px">${c.service||'—'}</td><td style="max-width:150px;color:var(--text2);font-size:12px">${c.problem||'—'}</td><td>${badgeClient(c.status)}</td><td style="color:var(--green);font-weight:700">${(c.expected_value||0).toLocaleString()} ج</td><td style="max-width:150px;font-size:12px">${c.next_step||'—'}</td><td><button class="action-btn" onclick="editClient(${c.id})">تعديل</button><button class="action-btn del" onclick="deleteItem('client',${c.id})">حذف</button></td></tr>`).join('');}
+function filterClients(f,el){clientFilter=f;document.querySelectorAll('.filters .filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderClients();}
+function badgeClient(s){if(!s)return'<span class="badge new-c">—</span>';if(s.includes('مهتم'))return'<span class="badge hot">مهتم</span>';if(s.includes('اتغلق'))return'<span class="badge closed">اتغلق</span>';if(s.includes('بيتكلم'))return'<span class="badge talking">بيتكلم</span>';if(s.includes('رفض'))return'<span class="badge rejected">رفض</span>';return'<span class="badge new-c">جديد</span>';}
+
+async function loadOutreach(){allOutreach=await fetch('/api/outreach').then(r=>r.json());renderOutreach();}
+function renderOutreach(){const pos=allOutreach.filter(o=>o.reply&&o.reply.includes('ايجابي')).length;const wait=allOutreach.filter(o=>o.reply&&o.reply.includes('الانتظار')).length;document.getElementById('or-total').textContent=allOutreach.length;document.getElementById('or-pos').textContent=pos;document.getElementById('or-wait').textContent=wait;document.getElementById('or-rate').textContent=allOutreach.length?Math.round((pos/allOutreach.length)*100)+'%':'0%';document.getElementById('outreach-count').textContent=allOutreach.length;const tbody=document.getElementById('outreach-tbody');if(!allOutreach.length){tbody.innerHTML=`<tr><td colspan="9">${emptyState('مفيش رسايل')}</td></tr>`;return;}tbody.innerHTML=allOutreach.map((o,i)=>`<tr><td style="color:var(--text2);font-size:11px">${i+1}</td><td style="font-weight:600">${o.name}</td><td style="color:var(--text2)">${o.platform||'—'}</td><td style="font-size:12px">${o.service||'—'}</td><td>${badgeOutreach(o.reply)}</td><td style="color:var(--text2);font-size:12px">${o.sent_date||'—'}</td><td style="text-align:center;color:var(--text2)">${o.week||1}</td><td style="max-width:150px;color:var(--text2);font-size:12px">${o.notes||'—'}</td><td><button class="action-btn" onclick="editOutreach(${o.id})">تعديل</button><button class="action-btn del" onclick="deleteItem('outreach',${o.id})">حذف</button></td></tr>`).join('');}
+function badgeOutreach(s){if(!s)return'<span class="badge waiting">—</span>';if(s.includes('ايجابي'))return'<span class="badge positive">رد ايجابي</span>';if(s.includes('الانتظار'))return'<span class="badge waiting">في الانتظار</span>';if(s.includes('سلبي'))return'<span class="badge negative">رد سلبي</span>';return'<span class="badge no-reply">ما ردش</span>';}
+
+async function loadChecklists(){allChecklists=await fetch('/api/checklists').then(r=>r.json());renderChecklists();}
+function renderChecklists(){
+  const filtered=allChecklists.filter(c=>c.category===checkFilter);
+  const grid=document.getElementById('checklists-grid');
+  if(!filtered.length){grid.innerHTML=`<div style="grid-column:1/-1">${emptyState('مفيش قوائم — ضيف قائمة جديدة')}</div>`;return;}
+  grid.innerHTML=filtered.map(ch=>{
+    const key=`cl-${ch.id}`;
+    if(!checkStates[key])checkStates[key]={};
+    const items=ch.items||[];
+    return`<div class="checklist-card">
+      <div class="checklist-card-header">
+        <div><div class="checklist-cat">${ch.category}</div><div class="checklist-title">${ch.title}</div></div>
+        <button class="checklist-delete-btn" onclick="deleteChecklist(${ch.id})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+      </div>
+      ${items.map((item,idx)=>{
+        const done=checkStates[key][idx]||false;
+        const text=typeof item==='object'?item.text:item;
+        const assignee=typeof item==='object'?(item.assignee||')':'';
+        return`<div class="check-item">
+          <div class="check-box ${done?'done':''}" onclick="toggleCheck('${key}',${idx},this)"></div>
+          <div class="check-content">
+            <div class="check-text ${done?'done':''}" id="ct-${key}-${idx}">${text}</div>
+            ${assignee?`<div class="check-assignee"><svg viewBox="0 0 24 24" style="width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>${assignee}</div>`:''}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
 }
-function logout() { sessionStorage.removeItem('dashboard_user'); localStorage.removeItem('dashboard_user'); window.location.href = '/login.html'; }
+function toggleCheck(key,idx,el){checkStates[key][idx]=!checkStates[key][idx];el.classList.toggle('done');document.getElementById(`ct-${key}-${idx}`).classList.toggle('done');}
+function filterChecks(cat,el){checkFilter=cat;document.querySelectorAll('#page-checklists .week-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderChecklists();}
 
-const currentUser = checkAuth();
-if (currentUser) {
-  document.getElementById('user-name').textContent = currentUser.name;
-  document.getElementById('user-avatar').textContent = currentUser.name[0];
-}
-
-let currentModal = null, editingId = null;
-let allVideos = [], allClients = [], allOutreach = [], allChecklists = [];
-let videoFilter = 'all', clientFilter = 'all', checkFilter = 'يومي', selectedWeek = 1;
-let checkStates = {};
-
-function nav(page, el) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
-  if (el) el.classList.add('active');
-  const loaders = { dashboard: loadDashboard, content: loadVideos, clients: loadClients, outreach: loadOutreach, checklists: loadChecklists, review: loadReviews };
-  if (loaders[page]) loaders[page]();
-}
-
-async function loadStats() {
-  try {
-    const d = await fetch('/api/stats').then(r => r.json());
-    document.getElementById('s-published').textContent  = d.videos.published;
-    document.getElementById('s-pct-bar').style.width    = d.videos.pct + '%';
-    document.getElementById('s-clients').textContent    = d.clients.total;
-    document.getElementById('s-hot').textContent        = d.clients.hot;
-    document.getElementById('s-closed').textContent     = d.clients.closed;
-    document.getElementById('s-clients-bar').style.width = Math.min((d.clients.closed/5)*100,100) + '%';
-    document.getElementById('s-outreach').textContent   = d.outreach.total;
-    document.getElementById('s-rate').textContent       = d.outreach.rate;
-    document.getElementById('s-revenue').textContent    = d.revenue.toLocaleString() + ' ج';
-    document.getElementById('s-pipeline').textContent   = d.clients.pipeline.toLocaleString();
-  } catch(e) {}
-}
-
-async function loadDashboard() {
-  await loadStats();
-  try {
-    const [videos, clients] = await Promise.all([fetch('/api/videos').then(r=>r.json()), fetch('/api/clients').then(r=>r.json())]);
-    const cl = document.getElementById('dash-clients-list');
-    document.getElementById('dash-clients-count').textContent = clients.length;
-    cl.innerHTML = !clients.length ? emptyState('لسه مفيش عملاء') : clients.slice(0,5).map(c=>`<div class="mini-item"><div><div class="mini-name">${c.name}</div><div class="mini-sub">${c.source} · ${c.service}</div></div><div style="display:flex;align-items:center;gap:8px">${badgeClient(c.status)}<div class="mini-val">${(c.expected_value||0).toLocaleString()} ج</div></div></div>`).join('');
-    const vl = document.getElementById('dash-videos-list');
-    document.getElementById('dash-videos-count').textContent = videos.length;
-    vl.innerHTML = !videos.length ? emptyState('لسه مفيش فيديوهات') : videos.slice(0,5).map(v=>`<div class="mini-item"><div><div class="mini-name">${v.title}</div><div class="mini-sub">${v.type} · ${v.platform}</div></div>${badgeVideo(v.status)}</div>`).join('');
-    const wc = document.getElementById('week-chart');
-    const maxV = Math.max(1,...[1,2,3,4].map(w=>videos.filter(v=>v.week===w).length));
-    wc.innerHTML = [1,2,3,4].map(w=>{const cnt=videos.filter(v=>v.week===w).length;const h=Math.max(4,Math.round((cnt/maxV)*65));return`<div class="bar-col"><div class="bar-cnt">${cnt}</div><div class="bar" style="height:${h}px;opacity:${0.4+w*0.15}"></div><div class="bar-lbl">اسبوع ${w}</div></div>`;}).join('');
-  } catch(e) {}
-}
-
-async function loadVideos() { allVideos = await fetch('/api/videos').then(r=>r.json()); renderVideos(); }
-function renderVideos() {
-  const f = videoFilter==='all' ? allVideos : allVideos.filter(v=>v.status&&v.status.includes(videoFilter));
-  document.getElementById('videos-count').textContent = f.length;
-  const tbody = document.getElementById('videos-tbody');
-  if (!f.length) { tbody.innerHTML=`<tr><td colspan="8">${emptyState('مفيش فيديوهات')}</td></tr>`; return; }
-  tbody.innerHTML = f.map((v,i)=>`<tr><td style="color:var(--text2);font-size:11px">${i+1}</td><td style="max-width:200px;font-weight:600">${v.title}</td><td><span class="badge new-c">${v.type||'—'}</span></td><td style="color:var(--text2)">${v.platform||'—'}</td><td style="max-width:160px;color:var(--text2);font-size:12px">${v.hook||'—'}</td><td>${badgeVideo(v.status)}</td><td style="text-align:center;color:var(--text2)">${v.week||1}</td><td><button class="action-btn" onclick="editVideo(${v.id})">تعديل</button><button class="action-btn del" onclick="deleteItem('video',${v.id})">حذف</button></td></tr>`).join('');
-}
-function filterVideos(f,el) { videoFilter=f; document.querySelectorAll('#video-filters .filter-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active'); renderVideos(); }
-function badgeVideo(s) { if(!s) return '<span class="badge filming">—</span>'; if(s.includes('منشور')) return '<span class="badge published">منشور</span>'; if(s.includes('جاهز')) return '<span class="badge ready">جاهز</span>'; return '<span class="badge filming">متصور</span>'; }
-
-async function loadClients() { allClients = await fetch('/api/clients').then(r=>r.json()); renderClients(); }
-function renderClients() {
-  const f = clientFilter==='all' ? allClients : allClients.filter(c=>c.status&&c.status.includes(clientFilter));
-  document.getElementById('clients-count').textContent = f.length;
-  const tbody = document.getElementById('clients-tbody');
-  if (!f.length) { tbody.innerHTML=`<tr><td colspan="9">${emptyState('مفيش عملاء')}</td></tr>`; return; }
-  tbody.innerHTML = f.map((c,i)=>`<tr><td style="color:var(--text2);font-size:11px">${i+1}</td><td style="font-weight:600">${c.name}</td><td style="color:var(--text2);font-size:12px">${c.source||'—'}</td><td style="font-size:12px">${c.service||'—'}</td><td style="max-width:150px;color:var(--text2);font-size:12px">${c.problem||'—'}</td><td>${badgeClient(c.status)}</td><td style="color:var(--green);font-weight:700">${(c.expected_value||0).toLocaleString()} ج</td><td style="max-width:150px;font-size:12px">${c.next_step||'—'}</td><td><button class="action-btn" onclick="editClient(${c.id})">تعديل</button><button class="action-btn del" onclick="deleteItem('client',${c.id})">حذف</button></td></tr>`).join('');
-}
-function filterClients(f,el) { clientFilter=f; document.querySelectorAll('.filters .filter-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active'); renderClients(); }
-function badgeClient(s) { if(!s) return '<span class="badge new-c">—</span>'; if(s.includes('مهتم')) return '<span class="badge hot">مهتم</span>'; if(s.includes('اتغلق')) return '<span class="badge closed">اتغلق</span>'; if(s.includes('بيتكلم')) return '<span class="badge talking">بيتكلم</span>'; if(s.includes('رفض')) return '<span class="badge rejected">رفض</span>'; return '<span class="badge new-c">جديد</span>'; }
-
-async function loadOutreach() { allOutreach = await fetch('/api/outreach').then(r=>r.json()); renderOutreach(); }
-function renderOutreach() {
-  const pos=allOutreach.filter(o=>o.reply&&o.reply.includes('ايجابي')).length;
-  const wait=allOutreach.filter(o=>o.reply&&o.reply.includes('الانتظار')).length;
-  document.getElementById('or-total').textContent = allOutreach.length;
-  document.getElementById('or-pos').textContent   = pos;
-  document.getElementById('or-wait').textContent  = wait;
-  document.getElementById('or-rate').textContent  = allOutreach.length ? Math.round((pos/allOutreach.length)*100)+'%' : '0%';
-  document.getElementById('outreach-count').textContent = allOutreach.length;
-  const tbody = document.getElementById('outreach-tbody');
-  if (!allOutreach.length) { tbody.innerHTML=`<tr><td colspan="9">${emptyState('مفيش رسايل')}</td></tr>`; return; }
-  tbody.innerHTML = allOutreach.map((o,i)=>`<tr><td style="color:var(--text2);font-size:11px">${i+1}</td><td style="font-weight:600">${o.name}</td><td style="color:var(--text2)">${o.platform||'—'}</td><td style="font-size:12px">${o.service||'—'}</td><td>${badgeOutreach(o.reply)}</td><td style="color:var(--text2);font-size:12px">${o.sent_date||'—'}</td><td style="text-align:center;color:var(--text2)">${o.week||1}</td><td style="max-width:150px;color:var(--text2);font-size:12px">${o.notes||'—'}</td><td><button class="action-btn" onclick="editOutreach(${o.id})">تعديل</button><button class="action-btn del" onclick="deleteItem('outreach',${o.id})">حذف</button></td></tr>`).join('');
-}
-function badgeOutreach(s) { if(!s) return '<span class="badge waiting">—</span>'; if(s.includes('ايجابي')) return '<span class="badge positive">رد ايجابي</span>'; if(s.includes('الانتظار')) return '<span class="badge waiting">في الانتظار</span>'; if(s.includes('سلبي')) return '<span class="badge negative">رد سلبي</span>'; return '<span class="badge no-reply">ما ردش</span>'; }
-
-async function loadChecklists() { allChecklists = await fetch('/api/checklists').then(r=>r.json()); renderChecklists(); }
-function renderChecklists() {
-  const filtered = allChecklists.filter(c=>c.category===checkFilter);
-  const grid = document.getElementById('checklists-grid');
-  if (!filtered.length) { grid.innerHTML = emptyState('مفيش قوائم'); return; }
-  grid.innerHTML = filtered.map(ch=>{const key=`cl-${ch.id}`;if(!checkStates[key])checkStates[key]={};return`<div class="checklist-card"><div class="checklist-cat">${ch.category}</div><div class="checklist-title">${ch.title}</div>${ch.items.map((item,idx)=>{const done=checkStates[key][idx]||false;return`<div class="check-item"><div class="check-box ${done?'done':''}" onclick="toggleCheck('${key}',${idx},this)"></div><div class="check-text ${done?'done':''}" id="ct-${key}-${idx}">${item}</div></div>`;}).join('')}</div>`;}).join('');
-}
-function toggleCheck(key,idx,el) { checkStates[key][idx]=!checkStates[key][idx]; el.classList.toggle('done'); document.getElementById(`ct-${key}-${idx}`).classList.toggle('done'); }
-function filterChecks(cat,el) { checkFilter=cat; document.querySelectorAll('#page-checklists .week-tab').forEach(b=>b.classList.remove('active')); el.classList.add('active'); renderChecklists(); }
-
-async function loadReviews() {
-  const reviews = await fetch('/api/reviews').then(r=>r.json());
-  const hist = document.getElementById('reviews-history');
-  if (!reviews.length) { hist.innerHTML=''; return; }
-  hist.innerHTML = reviews.map(rv=>`<div class="table-card" style="margin-bottom:12px"><div class="table-header"><span class="table-title">اسبوع ${rv.week}</span><span class="table-count">${(rv.created_at||'').split('T')[0]}</span></div><div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:14px"><div><div style="font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:700;text-transform:uppercase">اللي اشتغل</div><div style="font-size:13px">${rv.what_worked||'—'}</div></div><div><div style="font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:700;text-transform:uppercase">اللي ما اشتغلش</div><div style="font-size:13px">${rv.what_didnt||'—'}</div></div><div><div style="font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:700;text-transform:uppercase">التغييرات</div><div style="font-size:13px">${rv.next_changes||'—'}</div></div><div><div style="font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:700;text-transform:uppercase">احسن فيديو</div><div style="font-size:13px">${rv.best_video||'—'}</div></div></div></div>`).join('');
-}
-function selectWeek(w,el) { selectedWeek=w; document.querySelectorAll('#page-review .week-tab').forEach(b=>b.classList.remove('active')); el.classList.add('active'); const t={1:'الاول',2:'التاني',3:'التالت',4:'الرابع'}; document.getElementById('review-week-title').textContent='الاسبوع '+t[w]; }
-async function saveReview() {
-  const data={week:selectedWeek,videos_count:parseInt(document.getElementById('rv-videos').value)||0,outreach_count:parseInt(document.getElementById('rv-outreach').value)||0,new_clients:parseInt(document.getElementById('rv-clients').value)||0,best_video:document.getElementById('rv-best').value,what_worked:document.getElementById('rv-worked').value,what_didnt:document.getElementById('rv-didnt').value,next_changes:document.getElementById('rv-changes').value};
-  await fetch('/api/reviews',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-  toast('تم حفظ المراجعة'); loadReviews();
-}
-
-const videoForm=()=>`<div class="form-group"><label>عنوان الفيديو *</label><input type="text" id="f-title" placeholder="موضوع الفيديو"></div><div class="form-row"><div class="form-group"><label>النوع</label><select id="f-type"><option>وجع + تعليم</option><option>Case Study</option><option>تعليم</option><option>جذب</option><option>بيع مباشر</option></select></div><div class="form-group"><label>المنصة</label><select id="f-platform"><option>الـ3 منصات</option><option>TikTok</option><option>Instagram</option><option>Facebook</option></select></div></div><div class="form-group"><label>الـ Hook</label><input type="text" id="f-hook" placeholder="الجملة الاولى"></div><div class="form-group"><label>الـ CTA</label><input type="text" id="f-cta" placeholder="كومنت كلمة..."></div><div class="form-row"><div class="form-group"><label>الحالة</label><select id="f-status"><option value="متصور">متصور</option><option value="جاهز">جاهز</option><option value="منشور">منشور</option></select></div><div class="form-group"><label>الاسبوع</label><select id="f-week"><option value="1">اسبوع 1</option><option value="2">اسبوع 2</option><option value="3">اسبوع 3</option><option value="4">اسبوع 4</option></select></div></div><div class="form-group"><label>ملاحظات</label><textarea id="f-notes"></textarea></div>`;
-
-const clientForm=()=>`<div class="form-group"><label>الاسم *</label><input type="text" id="f-name" placeholder="اسم العميل او الشركة"></div><div class="form-row"><div class="form-group"><label>المصدر</label><select id="f-source"><option>Facebook Groups</option><option>Outreach مباشر</option><option>محيط دافئ</option><option>تعليق استراتيجي</option><option>TikTok</option><option>Instagram</option></select></div><div class="form-group"><label>الخدمة</label><select id="f-service"><option>ويب سايت</option><option>سيستم</option><option>ويب سايت + فانل</option><option>سيستم HR</option><option>سيستم كاشير</option></select></div></div><div class="form-group"><label>المشكلة</label><textarea id="f-problem" placeholder="ايه مشكلته؟"></textarea></div><div class="form-row"><div class="form-group"><label>الحالة</label><select id="f-status"><option value="جديد">جديد</option><option value="بيتكلم">بيتكلم</option><option value="مهتم">مهتم</option><option value="اتغلق">اتغلق</option><option value="رفض">رفض</option></select></div><div class="form-group"><label>القيمة (جنيه)</label><input type="number" id="f-value" placeholder="0"></div></div><div class="form-group"><label>الخطوة الجاية</label><input type="text" id="f-next"></div><div class="form-group"><label>ملاحظات</label><textarea id="f-notes"></textarea></div>`;
-
-const outreachForm=()=>`<div class="form-group"><label>الاسم *</label><input type="text" id="f-name" placeholder="اسم الشخص او الشركة"></div><div class="form-row"><div class="form-group"><label>المنصة</label><select id="f-platform"><option>Facebook</option><option>LinkedIn</option><option>واتساب</option><option>Instagram</option></select></div><div class="form-group"><label>الخدمة</label><select id="f-service"><option>ويب سايت</option><option>سيستم</option></select></div></div><div class="form-row"><div class="form-group"><label>الرد</label><select id="f-reply"><option value="في الانتظار">في الانتظار</option><option value="رد ايجابي">رد ايجابي</option><option value="رد سلبي">رد سلبي</option><option value="ما ردش">ما ردش</option></select></div><div class="form-group"><label>تاريخ الارسال</label><input type="date" id="f-date"></div></div><div class="form-row"><div class="form-group"><label>الاسبوع</label><select id="f-week"><option value="1">اسبوع 1</option><option value="2">اسبوع 2</option><option value="3">اسبوع 3</option><option value="4">اسبوع 4</option></select></div></div><div class="form-group"><label>ملاحظات</label><textarea id="f-notes"></textarea></div>`;
-
-function openModal(type,data) {
-  currentModal=type; editingId=data?.id||null;
-  const titles={video:'فيديو جديد',client:'عميل جديد',outreach:'رسالة جديدة'};
-  const editTitles={video:'تعديل الفيديو',client:'تعديل العميل',outreach:'تعديل الرسالة'};
-  document.getElementById('modal-title').textContent=data?editTitles[type]:titles[type];
-  document.getElementById('modal-body').innerHTML={video:videoForm,client:clientForm,outreach:outreachForm}[type]();
-  if(data) fillForm(type,data);
+function openChecklistModal(){
+  currentModal='checklist';editingId=null;
+  document.getElementById('modal-title').textContent='قائمة جديدة';
+  document.getElementById('modal-body').innerHTML=`
+    <div class="form-row">
+      <div class="form-group"><label>العنوان *</label><input type="text" id="cl-title" placeholder="مثال: روتين الصبح"></div>
+      <div class="form-group"><label>النوع</label><select id="cl-cat"><option value="يومي">يومي</option><option value="أسبوعي">اسبوعي</option><option value="محتوى">افكار محتوى</option></select></div>
+    </div>
+    <div class="form-group"><label>البنود — البند + المسؤول (اختياري)</label><div id="cl-items-wrap"></div><button class="add-item-btn" onclick="addItemRow()">+ بند جديد</button></div>`;
+  addItemRow();addItemRow();addItemRow();
   document.getElementById('modal-overlay').classList.add('open');
 }
 
-function fillForm(type,d) {
-  if(type==='video'){document.getElementById('f-title').value=d.title||'';document.getElementById('f-type').value=d.type||'وجع + تعليم';document.getElementById('f-platform').value=d.platform||'الـ3 منصات';document.getElementById('f-hook').value=d.hook||'';document.getElementById('f-cta').value=d.cta||'';document.getElementById('f-status').value=(d.status||'متصور').replace(/[^\w\u0600-\u06FF ]/g,'').trim();document.getElementById('f-week').value=d.week||1;document.getElementById('f-notes').value=d.notes||'';}
-  else if(type==='client'){document.getElementById('f-name').value=d.name||'';document.getElementById('f-source').value=d.source||'Facebook Groups';document.getElementById('f-service').value=d.service||'ويب سايت';document.getElementById('f-problem').value=d.problem||'';document.getElementById('f-status').value=(d.status||'جديد').replace(/[^\w\u0600-\u06FF ]/g,'').trim();document.getElementById('f-value').value=d.expected_value||0;document.getElementById('f-next').value=d.next_step||'';document.getElementById('f-notes').value=d.notes||'';}
-  else if(type==='outreach'){document.getElementById('f-name').value=d.name||'';document.getElementById('f-platform').value=d.platform||'Facebook';document.getElementById('f-service').value=d.service||'ويب سايت';document.getElementById('f-reply').value=(d.reply||'في الانتظار').replace(/[^\w\u0600-\u06FF ]/g,'').trim();document.getElementById('f-date').value=d.sent_date||'';document.getElementById('f-week').value=d.week||1;document.getElementById('f-notes').value=d.notes||'';}
+function addItemRow(text='',assignee=''){
+  const wrap=document.getElementById('cl-items-wrap');
+  const div=document.createElement('div');
+  div.className='item-row';
+  div.innerHTML=`<input type="text" placeholder="اكتب البند..." value="${text}"><input type="text" class="assignee-input" placeholder="المسؤول" value="${assignee}"><button class="remove-item-btn" onclick="this.parentElement.remove()">×</button>`;
+  wrap.appendChild(div);
 }
 
-async function saveModal() {
-  let data={},url='',method='POST';
-  if(currentModal==='video'){const title=document.getElementById('f-title').value.trim();if(!title){toast('اكتب عنوان الفيديو');return;}data={title,type:document.getElementById('f-type').value,platform:document.getElementById('f-platform').value,hook:document.getElementById('f-hook').value,cta:document.getElementById('f-cta').value,status:document.getElementById('f-status').value,week:parseInt(document.getElementById('f-week').value),notes:document.getElementById('f-notes').value};url=editingId?`/api/videos/${editingId}`:'/api/videos';method=editingId?'PUT':'POST';}
-  else if(currentModal==='client'){const name=document.getElementById('f-name').value.trim();if(!name){toast('اكتب اسم العميل');return;}data={name,source:document.getElementById('f-source').value,service:document.getElementById('f-service').value,problem:document.getElementById('f-problem').value,status:document.getElementById('f-status').value,expected_value:parseFloat(document.getElementById('f-value').value)||0,next_step:document.getElementById('f-next').value,notes:document.getElementById('f-notes').value};url=editingId?`/api/clients/${editingId}`:'/api/clients';method=editingId?'PUT':'POST';}
-  else if(currentModal==='outreach'){const name=document.getElementById('f-name').value.trim();if(!name){toast('اكتب الاسم');return;}data={name,platform:document.getElementById('f-platform').value,service:document.getElementById('f-service').value,reply:document.getElementById('f-reply').value,sent_date:document.getElementById('f-date').value,week:parseInt(document.getElementById('f-week').value),notes:document.getElementById('f-notes').value};url=editingId?`/api/outreach/${editingId}`:'/api/outreach';method=editingId?'PUT':'POST';}
-  await fetch(url,{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
-  closeModalNow(); toast('تم الحفظ');
-  if(currentModal==='video') loadVideos(); else if(currentModal==='client') loadClients(); else loadOutreach();
-  loadStats();
+async function saveChecklistModal(){
+  const title=document.getElementById('cl-title').value.trim();
+  if(!title){toast('اكتب عنوان القائمة');return;}
+  const cat=document.getElementById('cl-cat').value;
+  const rows=document.querySelectorAll('#cl-items-wrap .item-row');
+  const items=[];
+  rows.forEach(row=>{const inputs=row.querySelectorAll('input');const text=inputs[0].value.trim();const assignee=inputs[1].value.trim();if(text)items.push({text,assignee});});
+  if(!items.length){toast('ضيف بند واحد على الاقل');return;}
+  await fetch('/api/checklists',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({category:cat,title,items})});
+  closeModalNow();toast('تم حفظ القائمة');checkFilter=cat;loadChecklists();
 }
+
+async function deleteChecklist(id){
+  if(!confirm('متاكد تحذف القائمة دي؟'))return;
+  await fetch(`/api/checklists/${id}`,{method:'DELETE'});
+  toast('تم الحذف');loadChecklists();
+}
+
+async function loadReviews(){const reviews=await fetch('/api/reviews').then(r=>r.json());const hist=document.getElementById('reviews-history');if(!reviews.length){hist.innerHTML='';return;}hist.innerHTML=reviews.map(rv=>`<div class="table-card" style="margin-bottom:12px"><div class="table-header"><span class="table-title">اسبوع ${rv.week}</span><span class="table-count">${(rv.created_at||'').split('T')[0]}</span></div><div style="padding:14px 16px;display:grid;grid-template-columns:1fr 1fr;gap:14px"><div><div style="font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:700;text-transform:uppercase">اللي اشتغل</div><div style="font-size:13px">${rv.what_worked||'—'}</div></div><div><div style="font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:700;text-transform:uppercase">اللي ما اشتغلش</div><div style="font-size:13px">${rv.what_didnt||'—'}</div></div><div><div style="font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:700;text-transform:uppercase">التغييرات</div><div style="font-size:13px">${rv.next_changes||'—'}</div></div><div><div style="font-size:10px;color:var(--text2);margin-bottom:4px;font-weight:700;text-transform:uppercase">احسن فيديو</div><div style="font-size:13px">${rv.best_video||'—'}</div></div></div></div>`).join('');}
+function selectWeek(w,el){selectedWeek=w;document.querySelectorAll('#page-review .week-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');const t={1:'الاول',2:'التاني',3:'التالت',4:'الرابع'};document.getElementById('review-week-title').textContent='الاسبوع '+t[w];}
+async function saveReview(){const data={week:selectedWeek,videos_count:parseInt(document.getElementById('rv-videos').value)||0,outreach_count:parseInt(document.getElementById('rv-outreach').value)||0,new_clients:parseInt(document.getElementById('rv-clients').value)||0,best_video:document.getElementById('rv-best').value,what_worked:document.getElementById('rv-worked').value,what_didnt:document.getElementById('rv-didnt').value,next_changes:document.getElementById('rv-changes').value};await fetch('/api/reviews',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});toast('تم حفظ المراجعة');loadReviews();}
+
+const videoForm=()=>`<div class="form-group"><label>عنوان الفيديو *</label><input type="text" id="f-title" placeholder="موضوع الفيديو"></div><div class="form-row"><div class="form-group"><label>النوع</label><select id="f-type"><option>وجع + تعليم</option><option>Case Study</option><option>تعليم</option><option>جذب</option><option>بيع مباشر</option></select></div><div class="form-group"><label>المنصة</label><select id="f-platform"><option>الـ3 منصات</option><option>TikTok</option><option>Instagram</option><option>Facebook</option></select></div></div><div class="form-group"><label>الـ Hook</label><input type="text" id="f-hook" placeholder="الجملة الاولى"></div><div class="form-group"><label>الـ CTA</label><input type="text" id="f-cta" placeholder="كومنت كلمة..."></div><div class="form-row"><div class="form-group"><label>الحالة</label><select id="f-status"><option value="متصور">متصور</option><option value="جاهز">جاهز</option><option value="منشور">منشور</option></select></div><div class="form-group"><label>الاسبوع</label><select id="f-week"><option value="1">اسبوع 1</option><option value="2">اسبوع 2</option><option value="3">اسبوع 3</option><option value="4">اسبوع 4</option></select></div></div><div class="form-group"><label>ملاحظات</label><textarea id="f-notes"></textarea></div>`;
+const clientForm=()=>`<div class="form-group"><label>الاسم *</label><input type="text" id="f-name" placeholder="اسم العميل او الشركة"></div><div class="form-row"><div class="form-group"><label>المصدر</label><select id="f-source"><option>Facebook Groups</option><option>Outreach مباشر</option><option>محيط دافئ</option><option>تعليق استراتيجي</option><option>TikTok</option><option>Instagram</option></select></div><div class="form-group"><label>الخدمة</label><select id="f-service"><option>ويب سايت</option><option>سيستم</option><option>ويب سايت + فانل</option><option>سيستم HR</option><option>سيستم كاشير</option></select></div></div><div class="form-group"><label>المشكلة</label><textarea id="f-problem" placeholder="ايه مشكلته؟"></textarea></div><div class="form-row"><div class="form-group"><label>الحالة</label><select id="f-status"><option value="جديد">جديد</option><option value="بيتكلم">بيتكلم</option><option value="مهتم">مهتم</option><option value="اتغلق">اتغلق</option><option value="رفض">رفض</option></select></div><div class="form-group"><label>القيمة (جنيه)</label><input type="number" id="f-value" placeholder="0"></div></div><div class="form-group"><label>الخطوة الجاية</label><input type="text" id="f-next"></div><div class="form-group"><label>ملاحظات</label><textarea id="f-notes"></textarea></div>`;
+const outreachForm=()=>`<div class="form-group"><label>الاسم *</label><input type="text" id="f-name" placeholder="اسم الشخص او الشركة"></div><div class="form-row"><div class="form-group"><label>المنصة</label><select id="f-platform"><option>Facebook</option><option>LinkedIn</option><option>واتساب</option><option>Instagram</option></select></div><div class="form-group"><label>الخدمة</label><select id="f-service"><option>ويب سايت</option><option>سيستم</option></select></div></div><div class="form-row"><div class="form-group"><label>الرد</label><select id="f-reply"><option value="في الانتظار">في الانتظار</option><option value="رد ايجابي">رد ايجابي</option><option value="رد سلبي">رد سلبي</option><option value="ما ردش">ما ردش</option></select></div><div class="form-group"><label>تاريخ الارسال</label><input type="date" id="f-date"></div></div><div class="form-row"><div class="form-group"><label>الاسبوع</label><select id="f-week"><option value="1">اسبوع 1</option><option value="2">اسبوع 2</option><option value="3">اسبوع 3</option><option value="4">اسبوع 4</option></select></div></div><div class="form-group"><label>ملاحظات</label><textarea id="f-notes"></textarea></div>`;
+
+function openModal(type,data){currentModal=type;editingId=data?.id||null;const titles={video:'فيديو جديد',client:'عميل جديد',outreach:'رسالة جديدة'};const editTitles={video:'تعديل الفيديو',client:'تعديل العميل',outreach:'تعديل الرسالة'};document.getElementById('modal-title').textContent=data?editTitles[type]:titles[type];document.getElementById('modal-body').innerHTML={video:videoForm,client:clientForm,outreach:outreachForm}[type]();if(data)fillForm(type,data);document.getElementById('modal-overlay').classList.add('open');}
+function fillForm(type,d){if(type==='video'){document.getElementById('f-title').value=d.title||'';document.getElementById('f-type').value=d.type||'وجع + تعليم';document.getElementById('f-platform').value=d.platform||'الـ3 منصات';document.getElementById('f-hook').value=d.hook||'';document.getElementById('f-cta').value=d.cta||'';document.getElementById('f-status').value=(d.status||'متصور').replace(/[^\w\u0600-\u06FF ]/g,'').trim();document.getElementById('f-week').value=d.week||1;document.getElementById('f-notes').value=d.notes||'';}else if(type==='client'){document.getElementById('f-name').value=d.name||'';document.getElementById('f-source').value=d.source||'Facebook Groups';document.getElementById('f-service').value=d.service||'ويب سايت';document.getElementById('f-problem').value=d.problem||'';document.getElementById('f-status').value=(d.status||'جديد').replace(/[^\w\u0600-\u06FF ]/g,'').trim();document.getElementById('f-value').value=d.expected_value||0;document.getElementById('f-next').value=d.next_step||'';document.getElementById('f-notes').value=d.notes||'';}else if(type==='outreach'){document.getElementById('f-name').value=d.name||'';document.getElementById('f-platform').value=d.platform||'Facebook';document.getElementById('f-service').value=d.service||'ويب سايت';document.getElementById('f-reply').value=(d.reply||'في الانتظار').replace(/[^\w\u0600-\u06FF ]/g,'').trim();document.getElementById('f-date').value=d.sent_date||'';document.getElementById('f-week').value=d.week||1;document.getElementById('f-notes').value=d.notes||'';}}
+
+async function saveModal(){let data={},url='',method='POST';if(currentModal==='video'){const title=document.getElementById('f-title').value.trim();if(!title){toast('اكتب عنوان الفيديو');return;}data={title,type:document.getElementById('f-type').value,platform:document.getElementById('f-platform').value,hook:document.getElementById('f-hook').value,cta:document.getElementById('f-cta').value,status:document.getElementById('f-status').value,week:parseInt(document.getElementById('f-week').value),notes:document.getElementById('f-notes').value};url=editingId?`/api/videos/${editingId}`:'/api/videos';method=editingId?'PUT':'POST';}else if(currentModal==='client'){const name=document.getElementById('f-name').value.trim();if(!name){toast('اكتب اسم العميل');return;}data={name,source:document.getElementById('f-source').value,service:document.getElementById('f-service').value,problem:document.getElementById('f-problem').value,status:document.getElementById('f-status').value,expected_value:parseFloat(document.getElementById('f-value').value)||0,next_step:document.getElementById('f-next').value,notes:document.getElementById('f-notes').value};url=editingId?`/api/clients/${editingId}`:'/api/clients';method=editingId?'PUT':'POST';}else if(currentModal==='outreach'){const name=document.getElementById('f-name').value.trim();if(!name){toast('اكتب الاسم');return;}data={name,platform:document.getElementById('f-platform').value,service:document.getElementById('f-service').value,reply:document.getElementById('f-reply').value,sent_date:document.getElementById('f-date').value,week:parseInt(document.getElementById('f-week').value),notes:document.getElementById('f-notes').value};url=editingId?`/api/outreach/${editingId}`:'/api/outreach';method=editingId?'PUT':'POST';}await fetch(url,{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});closeModalNow();toast('تم الحفظ');if(currentModal==='video')loadVideos();else if(currentModal==='client')loadClients();else loadOutreach();loadStats();}
 
 function editVideo(id){const v=allVideos.find(x=>x.id===id);if(v)openModal('video',v);}
 function editClient(id){const c=allClients.find(x=>x.id===id);if(c)openModal('client',c);}
 function editOutreach(id){const o=allOutreach.find(x=>x.id===id);if(o)openModal('outreach',o);}
 
-async function deleteItem(type,id) {
-  if(!confirm('متاكد تحذف؟')) return;
-  await fetch({video:`/api/videos/${id}`,client:`/api/clients/${id}`,outreach:`/api/outreach/${id}`}[type],{method:'DELETE'});
-  toast('تم الحذف');
-  if(type==='video') loadVideos(); else if(type==='client') loadClients(); else loadOutreach();
-  loadStats();
-}
+async function deleteItem(type,id){if(!confirm('متاكد تحذف؟'))return;await fetch({video:`/api/videos/${id}`,client:`/api/clients/${id}`,outreach:`/api/outreach/${id}`}[type],{method:'DELETE'});toast('تم الحذف');if(type==='video')loadVideos();else if(type==='client')loadClients();else loadOutreach();loadStats();}
 
 function closeModal(e){if(e.target.id==='modal-overlay')closeModalNow();}
 function closeModalNow(){document.getElementById('modal-overlay').classList.remove('open');editingId=null;}
-
 function emptyState(msg){return`<div class="empty"><div class="empty-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="empty-text">${msg}</div></div>`;}
-
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 
 document.getElementById('date-now').textContent=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
