@@ -115,6 +115,8 @@ tr:hover td{background:rgba(255,255,255,0.012);}
 .checklist-title{font-size:13px;font-weight:700;color:var(--text);}
 .checklist-delete-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:0;line-height:1;flex-shrink:0;}
 .checklist-delete-btn:hover{color:var(--red);}
+.checklist-edit-btn{background:none;border:none;cursor:pointer;color:var(--text3);padding:0;line-height:1;}
+.checklist-edit-btn:hover{color:var(--accent);}
 .checklist-delete-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;}
 .check-item{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);}
 .check-item:last-child{border-bottom:none;}
@@ -325,7 +327,10 @@ function renderChecklists(){
     return`<div class="checklist-card">
       <div class="checklist-card-header">
         <div><div class="checklist-cat">${ch.category}</div><div class="checklist-title">${ch.title}</div></div>
-        <button class="checklist-delete-btn" onclick="deleteChecklist(${ch.id})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <button class="checklist-edit-btn" onclick="editChecklist(${ch.id})" title="تعديل"><svg viewBox="0 0 24 24" style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+          <button class="checklist-delete-btn" onclick="deleteChecklist(${ch.id})" title="حذف"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+        </div>
       </div>
       ${items.map((item,idx)=>{
         const done=checkStates[key][idx]||false;
@@ -345,17 +350,29 @@ function renderChecklists(){
 function toggleCheck(key,idx,el){checkStates[key][idx]=!checkStates[key][idx];el.classList.toggle('done');document.getElementById(`ct-${key}-${idx}`).classList.toggle('done');}
 function filterChecks(cat,el){checkFilter=cat;document.querySelectorAll('#page-checklists .week-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderChecklists();}
 
-function openChecklistModal(){
-  currentModal='checklist';editingId=null;
-  document.getElementById('modal-title').textContent='قائمة جديدة';
+function openChecklistModal(data){
+  currentModal='checklist';
+  editingId=data?data.id:null;
+  document.getElementById('modal-title').textContent=data?'تعديل القائمة':'قائمة جديدة';
   document.getElementById('modal-body').innerHTML=`
     <div class="form-row">
       <div class="form-group"><label>العنوان *</label><input type="text" id="cl-title" placeholder="مثال: روتين الصبح"></div>
       <div class="form-group"><label>النوع</label><select id="cl-cat"><option value="يومي">يومي</option><option value="أسبوعي">اسبوعي</option><option value="محتوى">افكار محتوى</option></select></div>
     </div>
     <div class="form-group"><label>البنود — البند + المسؤول (اختياري)</label><div id="cl-items-wrap"></div><button class="add-item-btn" onclick="addItemRow()">+ بند جديد</button></div>`;
-  addItemRow();addItemRow();addItemRow();
+  if(data){
+    document.getElementById('cl-title').value=data.title||'';
+    document.getElementById('cl-cat').value=data.category||'يومي';
+    const items=data.items||[];
+    if(items.length){items.forEach(item=>{const text=typeof item==='object'?item.text:item;const assignee=typeof item==='object'?(item.assignee||''):'';addItemRow(text,assignee);});}
+    else{addItemRow();addItemRow();addItemRow();}
+  } else {addItemRow();addItemRow();addItemRow();}
   document.getElementById('modal-overlay').classList.add('open');
+}
+
+function editChecklist(id){
+  const ch=allChecklists.find(c=>c.id===id);
+  if(ch)openChecklistModal(ch);
 }
 
 function addItemRow(text='',assignee=''){
@@ -374,8 +391,14 @@ async function saveChecklistModal(){
   const items=[];
   rows.forEach(row=>{const inputs=row.querySelectorAll('input');const text=inputs[0].value.trim();const assignee=inputs[1].value.trim();if(text)items.push({text,assignee});});
   if(!items.length){toast('ضيف بند واحد على الاقل');return;}
-  await fetch('/api/checklists',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({category:cat,title,items})});
-  closeModalNow();toast('تم حفظ القائمة');checkFilter=cat;loadChecklists();
+  if(editingId){
+    await fetch(`/api/checklists/${editingId}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({category:cat,title,items})});
+    toast('تم التعديل');
+  } else {
+    await fetch('/api/checklists',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({category:cat,title,items})});
+    toast('تم حفظ القائمة');
+  }
+  closeModalNow();checkFilter=cat;loadChecklists();
 }
 
 async function deleteChecklist(id){
