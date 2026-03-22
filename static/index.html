@@ -330,7 +330,7 @@ function renderChecklists(){
       ${items.map((item,idx)=>{
         const done=checkStates[key][idx]||false;
         const text=typeof item==='object'?item.text:item;
-        const assignee=typeof item==='object'?(item.assignee||')':'';
+        const assignee=typeof item==='object'?(item.assignee||''):'';  
         return`<div class="check-item">
           <div class="check-box ${done?'done':''}" onclick="toggleCheck('${key}',${idx},this)"></div>
           <div class="check-content">
